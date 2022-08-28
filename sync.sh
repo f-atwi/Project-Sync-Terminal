@@ -4,6 +4,9 @@
 required_width=80
 required_height=34
 
+# variable player contains the x and y position of the player initially at (0,0)
+player_pos=(16 78)
+
 check_terminal_size() {
     # Using tput to get terminal dimensions
     lines=$(tput lines)
@@ -74,44 +77,13 @@ ${h_separator}╚═════════════════════
     echo -en "$world"
 }
 
-    # Print the world
-    echo -n -e $v_separator
-    echo -e "${h_separator}╔══════════════════════════════════════════════════════════════════════════════╗"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
-    echo -e "${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}║                                                                              ║"
-    echo -e "${h_separator}╚══════════════════════════════════════════════════════════════════════════════╝\n"
+change_world_block() {
+    # echo $v_separator_count $h_separator_count
+    tput cup $(($1+$v_separator_count+1)) $(($2+$h_separator_count+1))
+    echo -en "$3"
 }
 
 # Call the functions
 check_terminal_size
 build_world
+change_world_block ${player_pos[0]} ${player_pos[1]} '^'
