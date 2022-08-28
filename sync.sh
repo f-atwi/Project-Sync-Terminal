@@ -20,9 +20,11 @@ build_world() {
     clear -x
 
     # Calculating the vertical and vertical seperator size to center the world
-    local v_separator_count=$((($lines - 34) / 2))
-    local h_separator_count=$((($columns - 80) / 2))
+    v_separator_count=$((($lines - 34) / 2))
+    h_separator_count=$((($columns - 80) / 2))
 
+    v_separator=''
+    h_separator=''
     # Creation of the vertical and horizontal seperators
     for ((i = 0; i < $v_separator_count; i++)); do
         v_separator+='\n'
