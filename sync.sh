@@ -30,6 +30,46 @@ build_world() {
     for ((i = 0; i < $h_separator_count; i++)); do
         h_separator+=' '
     done
+    # Print the world
+    world="\
+$v_separator\
+${h_separator}╔══════════════════════════════════════════════════════════════════════════════╗
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ║          ║                ║          ║                ║          ║     ║
+${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}║                                                                              ║
+${h_separator}╚══════════════════════════════════════════════════════════════════════════════╝"
+
+    echo -en "$world"
+}
 
     # Print the world
     echo -n -e $v_separator
