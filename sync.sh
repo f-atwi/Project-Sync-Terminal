@@ -15,4 +15,60 @@ check_terminal_size() {
     fi
 }
 
+build_world() {
+    # Clear the terminal without deleting the scrollback buffer
+    clear -x
+
+    # Calculating the vertical and vertical seperator size to center the world
+    local v_separator_count=$((($lines - 34) / 2))
+    local h_separator_count=$((($columns - 80) / 2))
+
+    # Creation of the vertical and horizontal seperators
+    for ((i = 0; i < $v_separator_count; i++)); do
+        v_separator+='\n'
+    done
+    for ((i = 0; i < $h_separator_count; i++)); do
+        h_separator+=' '
+    done
+
+    # Print the world
+    echo -n -e $v_separator
+    echo -e "${h_separator}╔══════════════════════════════════════════════════════════════════════════════╗"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ║          ║                ║          ║                ║          ║     ║"
+    echo -e "${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}║                                                                              ║"
+    echo -e "${h_separator}╚══════════════════════════════════════════════════════════════════════════════╝\n"
+}
+
+# Call the functions
 check_terminal_size
+build_world
