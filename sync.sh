@@ -79,11 +79,16 @@ ${h_separator}╚═════════════════════
 
 change_world_block() {
     # echo $v_separator_count $h_separator_count
-    tput cup $(($1+$v_separator_count+1)) $(($2+$h_separator_count+1))
+    tput cup $(($1 + $v_separator_count + 1)) $(($2 + $h_separator_count + 1))
     echo -en "$3"
 }
 
+trap "check_terminal_size;build_world" SIGWINCH
 # Call the functions
 check_terminal_size
 build_world
 change_world_block ${player_pos[0]} ${player_pos[1]} '^'
+
+while :; do
+    sleep .1
+done
