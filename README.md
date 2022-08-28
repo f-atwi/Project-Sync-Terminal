@@ -1,2 +1,3 @@
 # Project-Sync-Terminal
-Implementing the concept of Project Sync in a terminal.
+
+An implementation of Project Sync's concept in a terminal.
