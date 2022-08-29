@@ -3,6 +3,7 @@
 # variables
 required_width=80
 required_height=34
+size_ok=1
 
 # variable player contains the x and y position of the player initially at (0,0)
 player_pos=(16 78)
@@ -14,15 +15,12 @@ check_terminal_size() {
 
     # Check if terminal is large enough. If not, exit with error 1
     if (($lines < $required_height || $columns < $required_width)); then
+        clear
         echo -e "The terminal must have a dimension of at least $required_width"x"$required_height\nThe current size is $columns"x"$lines" 1>&2
-        exit 1
+        size_ok=0
+        return
     fi
-}
-
-build_world() {
-    # Clear the terminal without deleting the scrollback buffer
-    clear -x
-
+    size_ok=1
     # Calculating the vertical and vertical seperator size to center the world
     v_separator_count=$((($lines - 34) / 2))
     h_separator_count=$((($columns - 80) / 2))
@@ -36,44 +34,14 @@ build_world() {
     for ((i = 0; i < $h_separator_count; i++)); do
         h_separator+=' '
     done
+print_world() {
+    if [[ size_ok -eq 0 ]]; then
+        return
+    fi
+    # Clear the terminal
+    clear
+    update_world
     # Print the world
-    world="\
-$v_separator\
-${h_separator}╔══════════════════════════════════════════════════════════════════════════════╗
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║     ╔══════════╗                ╔══════════╗                ╔══════════╗     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ║          ║                ║          ║                ║          ║     ║
-${h_separator}║     ╚══════════╝                ╚══════════╝                ╚══════════╝     ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}╠═════════    ══════════    ══════════    ══════════    ══════════    ═════════╣
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}║                                                                              ║
-${h_separator}╚══════════════════════════════════════════════════════════════════════════════╝"
-
     echo -en "$world"
 }
 
