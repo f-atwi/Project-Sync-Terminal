@@ -110,6 +110,34 @@ check_terminal_size() {
     done
 }
 
+get_row() {
+    local _arr="$1"
+    local -n _arr_ref="$1"
+    local x=$2
+    # Get the row at the given position
+    local row="${_arr_ref[$x]}"
+    echo -e "$row"
+}
+
+get_element_from_row() {
+    local row="$1"
+    local y=$2
+    # Get the element at the given position
+    local element="${row:$y:1}"
+    echo -en "$element"
+}
+
+get_element_at_position() {
+    # Get the object at the given position
+    local _arr="$1"
+    local -n _arr_ref="$1"
+    local x=$2
+    local y=$3
+    local row="$(get_row $_arr $x)"
+    local element="$(get_element_from_row "$row" $y)"
+    echo -en "$element"
+}
+
 update_world() {
     local world_temp=$world_template
     for row in "${map[@]}"; do
@@ -129,13 +157,31 @@ print_world() {
     echo -en "$world"
 }
 
-place_object() {
-    object_row=${map[$1]}
-    object_at_pos=${object_row:$2:1}
-    # Check if object_at_pos is a single space
-    if [[ $object_at_pos == ' ' ]]; then
-        object_row=${object_row:0:$2}$3${object_row:$2+1}
-        map[$1]="$object_row"
+replace_element_at_position() {
+    # Substitute the element at the given position
+    local _arr="$1"
+    local -n _arr_ref="$1"
+    local x=$2
+    local y=$3
+    local new_element=$4
+    local row="$(get_row $_arr $x)"
+    local element=$(get_element_from_row $row $y)
+    local new_row=${row:0:$3}$new_element${row:$3+1}
+    _arr_ref[$x]=$new_row
+    update_world
+}
+
+replace_element_at_position_if_possible() {
+    local _arr="$1"
+    local -n _arr_ref="$1"
+    local x=$2
+    local y=$3
+    local element_new=$4
+    local row="$(get_row $_arr $x)"
+    local element="$(get_element_from_row "$row" $y)"
+    # Check if element_at_pos is a single space
+    if [[ $element == ' ' ]]; then
+        replace_element_at_position $_arr $x $y $element_new
     else
         echo -e "The position is already occupied" 1>&2
     fi
@@ -147,8 +193,10 @@ main() {
     # Call the functions
     check_terminal_size
     update_world
-    place_object 0 0 ^
-    print_world
+    # place_object 2 0 ^
+    # get_row map 5
+    replace_element_at_position_if_possible map 4 0 ^
+
 
     while :; do
         sleep .1
