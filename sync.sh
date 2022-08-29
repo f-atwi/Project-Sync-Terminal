@@ -129,17 +129,23 @@ print_world() {
     echo -en "$world"
 }
 
-change_world_block() {
-    # echo $v_separator_count $h_separator_count
-    tput cup $(($1 + $v_separator_count + 1)) $(($2 + $h_separator_count + 1))
-    echo -en "$3"
+place_object() {
+    object_row=${map[$1]}
+    object_at_pos=${object_row:$2:1}
+    # Check if object_at_pos is a single space
+    if [[ $object_at_pos == ' ' ]]; then
+        object_row=${object_row:0:$2}$3${object_row:$2+1}
+        map[$1]="$object_row"
+    else
+        echo -e "The position is already occupied" 1>&2
+    fi
+    update_world
 }
 
 trap "check_terminal_size;build_world" SIGWINCH
 # Call the functions
 check_terminal_size
-build_world
-change_world_block ${player_pos[0]} ${player_pos[1]} '^'
+    place_object 0 0 ^
 
 while :; do
     sleep .1
