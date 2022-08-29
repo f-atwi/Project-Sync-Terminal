@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # variables
-required_width=80
-required_height=34
+REQUIRED_WIDTH=80
+REQUIRED_HEIGHT=34
 size_ok=1
 
 # variable player contains the x and y position of the player initially at (0,0)
@@ -88,9 +88,9 @@ check_terminal_size() {
     columns=$(tput cols)
 
     # Check if terminal is large enough. If not, exit with error 1
-    if (($lines < $required_height || $columns < $required_width)); then
+    if (($lines < $REQUIRED_HEIGHT || $columns < $REQUIRED_WIDTH)); then
         clear
-        echo -e "The terminal must have a dimension of at least $required_width"x"$required_height\nThe current size is $columns"x"$lines" 1>&2
+        echo -e "The terminal must have a dimension of at least $REQUIRED_WIDTH"x"$REQUIRED_HEIGHT\nThe current size is $columns"x"$lines" 1>&2
         size_ok=0
         return
     fi
