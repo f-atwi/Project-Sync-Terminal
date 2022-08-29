@@ -142,11 +142,17 @@ place_object() {
     update_world
 }
 
-trap "check_terminal_size;build_world" SIGWINCH
-# Call the functions
-check_terminal_size
+main() {
+    trap "check_terminal_size;print_world" SIGWINCH
+    # Call the functions
+    check_terminal_size
+    update_world
     place_object 0 0 ^
+    print_world
 
-while :; do
-    sleep .1
-done
+    while :; do
+        sleep .1
+    done
+}
+
+main
