@@ -142,11 +142,10 @@ check_terminal_size() {
 
 get_row() {
     local _arr="$1"
-    local -n _arr_ref="$1"
     local x=$2
     # Get the row at the given position
-    local row="${_arr_ref[$x]}"
-    echo -e "$row"
+    local row="${_arr[$x]}"
+    echo "$row"
 }
 
 get_element_from_row() {
@@ -154,17 +153,16 @@ get_element_from_row() {
     local y=$2
     # Get the element at the given position
     local element="${row:$y:1}"
-    echo -e "$element"
+    echo "$element"
 }
 
 get_element_at_position() {
     # Get the object at the given position
     local _arr="$1"
-    local -n _arr_ref="$1"
     local x=$2
     local y=$3
-    local element="${_arr_ref[$x]:$y:1}"
-    echo -e "$element"
+    local element="${_arr:$(($x*$y)):1}"
+    echo "$element"
 }
 
 update_world() {
@@ -229,16 +227,15 @@ print_world() {
 
 replace_element_at_position() {
     # Substitute the element at the given position
-    local _arr="$1"
-    local -n _arr_ref="$1"
+    local -a _arr=("${!1}")  # Make a copy of the array passed as argument
     local x=$2
     local y=$3
     local new_element=$4
-    local row="$(get_row $_arr $x)"
-    local element=$(get_element_from_row "$row" $y)
-    local new_row=${row:0:$3}$new_element${row:$3+1}
-    _arr_ref[$x]=$new_row
-    update_world "$_arr"
+    local row="${_arr[$x]}"
+    local new_row="${row:0:$y}$new_element${row:$y+1}"
+    _arr[$x]="$new_row"
+    eval "$1=(\"\${_arr[@]}\")"  # Update the original array passed as argument
+    update_world "$1"
 }
 
 replace_element_at_position_if_possible() {
