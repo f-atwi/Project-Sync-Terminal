@@ -119,30 +119,25 @@ build_walls() {
 
 check_terminal_size() {
     # Using tput to get terminal dimensions
-    lines=$(tput lines)
-    columns=$(tput cols)
+    local lines=$(tput lines)
+    local columns=$(tput cols)
 
     # Check if terminal is large enough. If not, exit with error 1
-    if (($lines < $REQUIRED_HEIGHT || $columns < $REQUIRED_WIDTH)); then
+    if ((lines < REQUIRED_HEIGHT || columns < REQUIRED_WIDTH)); then
         clear
-        echo -e "The terminal must have a dimension of at least $REQUIRED_WIDTH"x"$REQUIRED_HEIGHT\nThe current size is $columns"x"$lines" 1>&2
+        echo "The terminal must have a dimension of at least $REQUIRED_WIDTH"x"$REQUIRED_HEIGHT" 1>&2
+        echo "The current size is $columns"x"$lines" 1>&2
         size_ok=0
         return
     fi
     size_ok=1
     # Calculating the vertical and vertical seperator size to center the world
-    v_separator_count=$((($lines - 34) / 2))
-    h_separator_count=$((($columns - 80) / 2))
+    local v_separator_count=$(((lines - REQUIRED_HEIGHT) / 2))
+    local h_separator_count=$(((columns - REQUIRED_WIDTH) / 2))
 
     # Creation of the vertical and horizontal seperators
-    v_separator=''
-    h_separator=''
-    for ((i = 0; i < $v_separator_count; i++)); do
-        v_separator+='\n'
-    done
-    for ((i = 0; i < $h_separator_count; i++)); do
-        h_separator+=' '
-    done
+    v_separator=$(printf '\n%.0s' $(seq 1 $v_separator_count))
+    h_separator=$(printf ' %.0s' $(seq 1 $h_separator_count))
 }
 
 get_row() {
