@@ -65,42 +65,42 @@ walls["udl"]="╣"
 walls["none"]="█"
 
 build_walls() {
-    local _arr="$1"
-    local -n _arr_ref="$1"
-    local -a built_map=("${_arr_ref[@]}")
-    for ((row = 0; row < "${#_arr_ref[@]}"; row++)); do
-        for ((col = 0; col < "${#_arr_ref[$row]}"; col++)); do
-            local element="$(get_element_at_position "$_arr" $row $col)"
+    local -a built_map=()
+    for ((row = 0; row < "${#map[@]}"; row++)); do
+        built_row=""
+        for ((col = 0; col < "${#map[$row]}"; col++)); do
+            local element="${map[$row]:$col:1}"
 
             if [[ "$element" != "W" ]]; then
+                built_row+="$element"
                 continue
             fi
 
             local wall=""
 
             if ((row > 0)); then
-                local up="$(get_element_at_position "$_arr" $((row - 1)) $col)"
+                local up="${map[$((row - 1))]:$col:1}"
                 if [[ "$up" == "W" ]]; then
                     wall+='u'
                 fi
             fi
 
-            if ((row < "${#_arr_ref[@]}" - 1)); then
-                local down="$(get_element_at_position "$_arr" $((row + 1)) $col)"
+            if ((row < "${#map[@]}" - 1)); then
+                local down="${map[$((row + 1))]:$col:1}"
                 if [[ "$down" == "W" ]]; then
                     wall+='d'
                 fi
             fi
 
             if ((col > 0)); then
-                local left="$(get_element_at_position "$_arr" $row $((col - 1)))"
+                local left="${map[$row]:$((col - 1)):1}"
                 if [[ "$left" == "W" ]]; then
                     wall+='l'
                 fi
             fi
 
-            if ((col < "${#_arr_ref[$row]}" - 1)); then
-                local right="$(get_element_at_position "$_arr" $row $((col + 1)))"
+            if ((col < "${#map[$row]}" - 1)); then
+                local right="${map[$row]:$((col + 1)):1}"
                 if [[ "$right" == "W" ]]; then
                     wall+='r'
                 fi
@@ -110,12 +110,11 @@ build_walls() {
                 wall="none"
             fi
 
-            replace_element_at_position built_map $row $col "${walls[$wall]}"
+            built_row+="${walls[$wall]}"
         done
+        built_map+=("$built_row")
     done
-    echo done
     map=("${built_map[@]}")
-    # echo "${map[1]}"
 }
 
 check_terminal_size() {
