@@ -15,22 +15,13 @@ declare -a map=()
 readarray -t map < map.txt
 
 declare -A walls
-walls["ud"]="║"
-walls["u"]="║"
-walls["d"]="║"
-walls["lr"]="═"
-walls["l"]="═"
-walls["r"]="═"
-walls["ur"]="╚"
-walls["ul"]="╝"
-walls["dr"]="╔"
-walls["dl"]="╗"
-walls["udlr"]="╬"
-walls["ulr"]="╩"
-walls["dlr"]="╦"
-walls["udr"]="╠"
-walls["udl"]="╣"
-walls["none"]="█"
+walls=(
+    [ud]="║" [u]="║" [d]="║" [lr]="═" [l]="═" [r]="═"
+    [ur]="╚" [ul]="╝" [dr]="╔" [dl]="╗"
+    [udlr]="╬" [ulr]="╩" [dlr]="╦" [udr]="╠" [udl]="╣"
+    [none]="█"
+)
+
 
 build_walls() {
     local -a built_map=()
