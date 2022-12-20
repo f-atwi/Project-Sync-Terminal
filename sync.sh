@@ -7,44 +7,12 @@ size_ok=1
 
 # variable player contains the x and y position of the player initially at (0,0)
 player_pos=(16 78)
-declare -a map=()
-# Below is the variable map which represents the map of the game. Modify the below array to change the map.
+
+# map.txt contains the layout of the map. Modify it to change the map.
 # Empty spaces are represented by ' ' and walls are represented by 'W'.
 # The size of the default map is 80x34
-map+=("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W     WWWWWWWWWWWW                WWWWWWWWWWWW                WWWWWWWWWWWW     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     WWWWWWWWWWWW                WWWWWWWWWWWW                WWWWWWWWWWWW     W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W     WWWWWWWWWWWW                WWWWWWWWWWWW                WWWWWWWWWWWW     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     W          W                W          W                W          W     W")
-map+=("W     WWWWWWWWWWWW                WWWWWWWWWWWW                WWWWWWWWWWWW     W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW    WWWWWWWWWW")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("W                                                                              W")
-map+=("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
+declare -a map=()
+readarray -t map < map.txt
 
 declare -A walls
 walls["ud"]="║"
