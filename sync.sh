@@ -25,6 +25,8 @@ walls=(
 
 build_walls() {
     local -a built_map=()
+    # "${#map[@]}}" returns the number of rows in the map
+
     for ((row = 0; row < "${#map[@]}"; row++)); do
         built_row=""
         for ((col = 0; col < "${#map[$row]}"; col++)); do
@@ -116,12 +118,14 @@ get_element_from_row() {
 }
 
 get_element_at_position() {
+    # expects an array as first argument, x and y coordinates as second and third argument
     # Get the object at the given position
     local _arr="$1"
+    local -n _arr_ref="$1"
     local x=$2
     local y=$3
-    local element="${_arr:$(($x*$y)):1}"
-    echo "$element"
+    local row="$(get_row $_arr $x)"
+    local element="$(get_element_from_row "$row" $y)"
 }
 
 update_world() {
@@ -165,7 +169,6 @@ Hm\\n\
 Hm"
     local world_temp=$world_template
     for row in "${_arr_ref[@]}"; do
-
         world_temp=$(echo -en "$world_temp" | sed "0,/m/{s/m/$row/}")
     done
     world=$(echo -en "$world_temp" | sed "s/H/$h_separator/g" | sed "s/V/$v_separator/g")
@@ -228,4 +231,4 @@ main() {
     done
 }
 
-main
+# main
